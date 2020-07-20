@@ -1,9 +1,26 @@
 package com.exerate.ui.model.request;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Length;
+
 public class UserDetailsRequestModel {
+
+	
+	@Length(min = 1,message = "First name can not be null")
 	private String firstName;
+	
+	@Length(min = 1,message = "Last name can not be null")
 	private String lastName;
+	
+	@Length(min = 1,message = "Email can not be null")
+	@Email
 	private String email;
+
+	@NotNull(message = "Password can not be null")
+	@Size(min = 8, max = 16, message = "The password length must be between 8 to 16 characters!")
 	private String password;
 
 	public String getFirstName() {
