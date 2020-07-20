@@ -1,5 +1,7 @@
 package com.exerate.ui.controller;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -23,6 +25,10 @@ import com.exerate.ui.model.request.UserDetailsRequestModel;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+	
+	
+	Map<String,UserRest> users;
+	
 
 	@GetMapping
 	public String getUser(@RequestParam(value = "limit", defaultValue = "10") int l,
@@ -34,13 +40,20 @@ public class UserController {
 
 	@GetMapping(path = "/{userId}", produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<UserRest> getUser(@PathVariable("userId") String id) {
+		
+		
+		if (users.containsKey(id)) {
+			return new ResponseEntity<UserRest>(users.get(id), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<UserRest>(HttpStatus.NO_CONTENT);
+		}
 
-		UserRest user = new UserRest();
-		user.setFirstName("Fatih");
-		user.setLastName("Sevim");
-		user.setEmail("test@gamil.com");
+//		UserRest user = new UserRest();
+//		user.setFirstName("Fatih");
+//		user.setLastName("Sevim");
+//		user.setEmail("test@gamil.com");
 
-		return new ResponseEntity<UserRest>(user, HttpStatus.ACCEPTED);
+		
 	}
 
 	@PostMapping(consumes = { MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE }, 
@@ -51,7 +64,11 @@ public class UserController {
 		user.setFirstName(userDetailsRequestModel.getFirstName());
 		user.setLastName(userDetailsRequestModel.getLastName());
 		user.setEmail(userDetailsRequestModel.getEmail());
-		user.setUserId(UUID.randomUUID().toString());
+		
+		String userId=UUID.randomUUID().toString();
+		user.setUserId(userId);
+		if (users==null) users=new HashMap<String, UserRest>();
+		users.put(userId, user);
 
 		return new ResponseEntity<UserRest>(user, HttpStatus.OK);
 		
