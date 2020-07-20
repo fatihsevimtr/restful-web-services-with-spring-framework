@@ -90,10 +90,13 @@ public class UserController {
 		
 	}
 
-	@DeleteMapping
-	public String deleteUser() {
-
-		return "delete user method was called";
+	@DeleteMapping(path = "/{userId}")
+	public ResponseEntity<Void> deleteUser(@PathVariable("userId") String id) {
+		users.remove(id);
+		
+		//return ResponseEntity.noContent().build();
+		
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT); //or this
 	}
 
 }
