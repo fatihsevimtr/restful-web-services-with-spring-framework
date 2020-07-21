@@ -1,4 +1,4 @@
-package com.exerate.ui.model;
+package com.exerate.ui.model.response;
 
 public class UserRest {
 	private String firstName;
