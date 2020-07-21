@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.exerate.ui.exceptions.UserServiceException;
 import com.exerate.ui.model.request.UpdateUserDetailsRequestModel;
 import com.exerate.ui.model.request.UserDetailsRequestModel;
 import com.exerate.ui.model.response.UserRest;
@@ -40,8 +41,7 @@ public class UserController {
 	@GetMapping(path = "/{userId}", produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<UserRest> getUser(@PathVariable("userId") String id) {
 		
-		String test=null;
-		int len=test.length();
+		if(true) throw new UserServiceException("My own error message been thrown!");//for testing
 		
 		if (users.containsKey(id)) {
 			return new ResponseEntity<UserRest>(users.get(id), HttpStatus.OK);
