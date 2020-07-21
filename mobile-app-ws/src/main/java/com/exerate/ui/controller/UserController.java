@@ -28,7 +28,7 @@ import com.exerate.ui.userservice.UserService;
 import com.exerate.ui.userservice.impl.UserServiceImp;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
 
 	Map<String, UserRest> users;
